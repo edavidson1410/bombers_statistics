@@ -1,28 +1,17 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+const bodyParser = require("body-parser");
+const db = require('./configs/dbConfig');
 
-//connect to .env file
-const env = require('dotenv').config();
-
-//mysql connection
-const mysql = require('mysql2');
-
-const db = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: env.parsed.dbPassword,
-    database: "bombers_statistics"
-})
-
-db.connect((err) => {
-    if (err) throw err;
-    console.log("Connected!");
-})
+//middleware
+app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded{(extended:true)});
 
 //routes
 const playerRouter = require("./routes/players");
 app.use("/players", playerRouter);
+//TODO: add games route
 
 //server startup
 app.get('/', function (req, res) {
@@ -30,9 +19,22 @@ app.get('/', function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            res.send(result);
+            res.send("This is the home page");
         }
     })
 })
+
+// Generic query method
+function queryPromise(sql, values={}){
+    return new Promise((resolve, reject) => {
+        db.query(sql, values, (error, results) => {
+            if(error) {
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        })
+    })
+}
 
 app.listen(port, () => console.log(`Server started on port ${port}`));
