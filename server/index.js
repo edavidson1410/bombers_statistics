@@ -1,12 +1,16 @@
 const express = require('express');
 const app = express();
-const port = 3000;
-const bodyParser = require("body-parser");
+const port = 3001;
 const db = require('./configs/dbConfig');
+const cors = require('cors');
+const corsOptions = require('./configs/corsOptions');
 
-//middleware
-app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded{(extended:true)});
+//middleware; handles structure of POST and PUT requests
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+//use CORS
+app.use(cors(corsOptions));
 
 //routes
 const playerRouter = require("./routes/players");
@@ -19,22 +23,11 @@ app.get('/', function (req, res) {
         if (err) {
             console.log(err);
         } else {
-            res.send("This is the home page");
+            res.send(result);
         }
     })
 })
 
-// Generic query method
-function queryPromise(sql, values={}){
-    return new Promise((resolve, reject) => {
-        db.query(sql, values, (error, results) => {
-            if(error) {
-                reject(error);
-            } else {
-                resolve(results);
-            }
-        })
-    })
-}
+
 
 app.listen(port, () => console.log(`Server started on port ${port}`));

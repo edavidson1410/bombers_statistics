@@ -1,7 +1,10 @@
+const express = require('express');
+const app = express();
 const mysql = require('mysql2');
+const bodyParser = require('body-parser');
+
 //connect to .env file
 const env = require('dotenv').config();
-
 
 //mysql connection
 const db = mysql.createConnection({
