@@ -1,9 +1,10 @@
-
+import PlayerInput from "./pages/PlayerInput";
+import './assets/App.css';
 
 function App() {
   return (
     <div className="App">
-      Player Stats Input
+      <PlayerInput />
     </div>
   );
 }
