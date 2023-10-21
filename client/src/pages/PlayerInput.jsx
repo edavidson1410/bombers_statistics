@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -13,20 +13,28 @@ const PlayerInput = () => {
         tries: "",
     })
 
-    useEffect(() => {
-        const fetchData = async()=> {
-            try {
-                const response = await fetch("http://localhost:3001/players");
-                const json = await response.json();
-                return json
-            } catch (e) {
-                console.log(e);
-            }
-        }
-        fetchData()
-      }, []);
+    const handleInputChange = (e) => {
+        const newPlayer = {...player};
+        newPlayer[e.target.id] = e.target.value;
+        setPlayer(newPlayer);
+    }
 
-    const inputFields = ["Name", "Position", "Caps", "Tries"];
+    const handleSubmitPost = async (e) => {
+        e.preventDefault();
+        const response = await fetch('http://localhost:3001/players', 
+        {
+            method: 'POST',
+            headers: {
+                "content-type": "application/json"
+              },
+            body: JSON.stringify(player)
+        })
+        console.log(response.body)
+        return response;
+    }
+
+
+    const inputFields = ["name", "position", "caps", "tries"];
 
     return(
         <>
@@ -38,9 +46,9 @@ const PlayerInput = () => {
               minHeight="100vh">
                 <form>
                     {inputFields.map((field) => {
-                        return <TextField key={field} label={field} variant="outlined" />
+                        return <TextField key={field} label={field} id={field} variant="outlined" onChange={(e) => handleInputChange(e)} />
                     })}
-                    <Button variant="contained">Submit</Button>
+                    <Button variant="contained" onClick={handleSubmitPost}>Submit</Button>
                 </form>
             </Box>
         </>
