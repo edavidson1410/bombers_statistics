@@ -20,8 +20,7 @@ const PlayerInput = () => {
     }
 
     const handleSubmitPost = async (e) => {
-        e.preventDefault();
-        const response = await fetch('http://localhost:3001/players', 
+        const response = await fetch('http://localhost:3001/playersInput', 
         {
             method: 'POST',
             headers: {
