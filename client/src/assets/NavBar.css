@@ -2,3 +2,31 @@ img {
     height: 3rem;
     margin: 0.5rem;
 }
+
+.logoContainer {
+    display: flex;
+    align-items: center;
+    justify-self: flex-start;
+}
+
+/* link styles */
+.linksContainer {
+    display: flex;
+    gap: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+
+}
+
+a:hover {
+    color: #f8cf2c;
+}
+
+
+.MuiToolbar-dense {
+    justify-content: space-between;
+    background-image: linear-gradient(to right, black , grey);
+}

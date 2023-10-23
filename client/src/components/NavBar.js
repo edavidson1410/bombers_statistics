@@ -1,6 +1,4 @@
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
+import {AppBar, Toolbar, Typography} from '@mui/material';
 import '../assets/NavBar.css';
 import logo from '../assets/bombers_logo.png';
 import { Link } from 'react-router-dom';
@@ -10,13 +8,22 @@ const NavBar = () => {
     return(
         <AppBar position="static">
         <Toolbar variant="dense">
-            <img src={logo} alt="Bombers Logo"></img>
-            <Typography variant="h6" color="inherit" component="div">
-            St. Louis Bombers
-            </Typography>
-            <Link to="/">Home</Link>
-            <Link to="/players">Player Input</Link>
-            <Link to="/playerTable">Player Table</Link>
+            <div className="logoContainer">
+                <img src={logo} alt="Bombers Logo"></img>
+                <Typography variant="h6" color="inherit" component="div">
+                St. Louis Bombers
+                </Typography>
+            </div>
+            <div className="linksContainer">
+                <Link to="/">Home</Link>
+                |
+                <Link to="/playerTable">All-Time Statistics</Link>
+                |
+                <Link to="/players">Player Input</Link>
+            </div>
+            <div>
+                Log In
+            </div>
         </Toolbar>
         </AppBar>
     )
