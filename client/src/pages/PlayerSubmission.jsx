@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
+import { TextField, Button, Box } from '@mui/material';
 import NavBar from '../components/NavBar';
 
 const PlayerInput = () => {
@@ -37,7 +35,7 @@ const PlayerInput = () => {
 
     return(
         <>
-            <NavBar></NavBar>
+            <NavBar />
             <Box
               display="flex"
               justifyContent="center"
@@ -47,7 +45,7 @@ const PlayerInput = () => {
                     {inputFields.map((field) => {
                         return <TextField key={field} label={field} id={field} variant="outlined" onChange={(e) => handleInputChange(e)} />
                     })}
-                    <Button variant="contained" onClick={handleSubmitPost}>Submit</Button>
+                    <Button color="accent" variant="contained" onClick={handleSubmitPost}>Submit</Button>
                 </form>
             </Box>
         </>

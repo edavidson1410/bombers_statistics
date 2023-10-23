@@ -19,7 +19,9 @@ const NavBar = () => {
                 |
                 <Link to="/playerTable">All-Time Statistics</Link>
                 |
-                <Link to="/players">Player Input</Link>
+                <Link to="/players">Player Submission</Link>
+                |
+                <Link to="/matchSubmission">Match Submission</Link>
             </div>
             <div>
                 Log In

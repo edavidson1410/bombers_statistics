@@ -1,0 +1,27 @@
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.matchup {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.roster {
+    display: flex;
+}
+
+.starters, .subs {
+    display: flex;
+    flex-direction: column;
+}
+
+li {
+    list-style: none;
+}
+

@@ -26,7 +26,9 @@ a:hover {
 }
 
 
-.MuiToolbar-dense {
+.MuiToolbar-dense, .MuiAppBar-positionStatic {
     justify-content: space-between;
     background-image: linear-gradient(to right, black , grey);
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
 }

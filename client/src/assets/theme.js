@@ -11,7 +11,7 @@ const theme = createTheme({
         accent: {
             main: "#f8cf2c"
         }
-    }
+    },
 })
 
 export default theme;
