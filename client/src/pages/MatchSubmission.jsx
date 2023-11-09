@@ -25,11 +25,26 @@ const MatchSubmission = () => {
         return(
             <li>
                 <label htmlFor={i}>{i}</label>
-                <TextField key={i} 
+                <TextField key={`position${i}`} 
                     label={starters[i]} 
                     id={i} 
                     variant="outlined" 
                     size="small"
+                    style = {{width: "10rem"}}
+                    onChange={(e) => handleInputChange(e)} />
+                <TextField key={`tries${i}`} 
+                    label="Tries"
+                    id={i} 
+                    variant="outlined" 
+                    size="small"
+                    style = {{width: "10rem"}}
+                    onChange={(e) => handleInputChange(e)} />
+                <TextField key={`conversions${i}`} 
+                    label="Conversions"
+                    id={i} 
+                    variant="outlined" 
+                    size="small"
+                    style = {{width: "10rem"}}
                     onChange={(e) => handleInputChange(e)} />
             </li>
         )
@@ -40,10 +55,25 @@ const MatchSubmission = () => {
         return(
             <li>
                 <label htmlFor={i}>{i}</label>
-                <TextField key={i} 
+                <TextField key={`position${i}`} 
                     label="Substitute" 
                     id={i} variant="outlined" 
                     size="small" 
+                    style = {{width: "10rem"}}
+                    onChange={(e) => handleInputChange(e)} />
+                <TextField key={`tries${i}`}
+                    label="Tries" 
+                    id={i} 
+                    variant="outlined" 
+                    size="small"
+                    style = {{width: "10rem"}}
+                    onChange={(e) => handleInputChange(e)} />
+                <TextField key={`conversions${i}`}
+                    label="Conversions"
+                    id={i} 
+                    variant="outlined" 
+                    size="small"
+                    style = {{width: "10rem"}}
                     onChange={(e) => handleInputChange(e)} />
             </li>
         )
@@ -64,8 +94,11 @@ const MatchSubmission = () => {
                     <TextField 
                         label="Opponent" 
                         id="opponent" 
-                        size="small" 
-                        InputProps={{className: theme}}/>
+                        size="small" />
+                </div>
+                <div>
+                    <TextField label="Bombers Score" id="bombers_score" size="small"/>
+                    <TextField label="Opponent Score" id="opponent_score" size="small"/>
                 </div>
                 <div className="date">
                     <TextField label="Year" id="year" size="small"/>

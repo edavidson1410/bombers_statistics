@@ -25,3 +25,7 @@ li {
     list-style: none;
 }
 
+.MuiFormControl-root {
+    margin: 0.5rem;
+}
+
