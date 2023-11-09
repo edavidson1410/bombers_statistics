@@ -1,5 +1,7 @@
 const db = require('../configs/dbConfig');
 
+
+//refactor for full match data submission
 const getAllMatches = (req, res) => {
     db.query('SELECT * FROM matches', (err, result) => {
         if (err) {
@@ -11,10 +13,16 @@ const getAllMatches = (req, res) => {
 }
 
 const createNewMatch = (req, res) => {
+
+    //
+
+    //match table
     const date = req.body.date;
     const home_away = req.body.home_away;
     const bomber_score = req.body.bomber_score;
     const opponent_score = req.body.opponent_score;
+
+
     db.query(`INSERT INTO matches VALUES (?, ?, ?, ?, ?)`, [0, date, home_away, bomber_score, opponent_score], (err, result) => {
         if (err) {
             console.log(err);
@@ -85,3 +93,7 @@ module.exports = {
     // deleteMatch,
     getMatchById
 }
+
+//create match
+//optional: create player or opponent
+//create game stat for each player
