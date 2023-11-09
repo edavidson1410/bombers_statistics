@@ -16,9 +16,6 @@ app.use(cors(corsOptions));
 const playerInputRouter = require("./routes/playersInput");
 app.use("/playersInput", playerInputRouter);
 
-const matchSubmissionRouter = require("./routes/matchSubmission");
-app.use("/matchSubmission", matchSubmissionRouter);
-
 const playersRouter = require("./routes/players");
 app.use("/players", playersRouter);
 

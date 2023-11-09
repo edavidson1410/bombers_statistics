@@ -26,12 +26,12 @@ const createNewPlayer = (req, res) => {
 }
 
 const updatePlayer = (req, res) => {
-    let id = req.params.id;
+    let id = req.params.player_id;
     const first_name = req.params.first_name;
     const last_name = req.body.last_name;
 
     db.query(`UPDATE players
-    SET first_name = IFNULL(?, first_name), last_name = IFNULL(?, last_name) WHERE id = ?`, [
+    SET first_name = IFNULL(?, first_name), last_name = IFNULL(?, last_name) WHERE player_id = ?`, [
         first_name,
         last_name,
         id
@@ -47,7 +47,7 @@ const updatePlayer = (req, res) => {
 }
 
 const deletePlayer = (req, res) => {
-    const id = req.params.id;
+    const id = req.params.player_id;
 
     db.query(`DELETE FROM players WHERE id=?`, [id], (err, result) => {
         if (err) {
@@ -61,7 +61,7 @@ const deletePlayer = (req, res) => {
 }
 
 const getPlayerById = (req, res) => {
-    db.query(`SELECT * FROM players WHERE id=${req.params.id}`, (err, result) => {
+    db.query(`SELECT * FROM players WHERE player_id=${req.params.id}`, (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);

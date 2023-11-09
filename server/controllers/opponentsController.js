@@ -29,7 +29,7 @@ const updateOpponent = (req, res) => {
     const name = req.body.name;
 
     db.query(`UPDATE opponents
-    SET name = IFNULL(?, name) WHERE id = ?`, [
+    SET name = IFNULL(?, name) WHERE opponent_id = ?`, [
         name,
         id
     ], (err, result) => {
@@ -45,7 +45,7 @@ const updateOpponent = (req, res) => {
 
 const deleteOpponent = (req, res) => {
     const id = req.params.id;
-    db.query(`DELETE FROM opponents WHERE id=?`, [id], (err, result) => {
+    db.query(`DELETE FROM opponents WHERE opponent_id=?`, [id], (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);
@@ -57,7 +57,7 @@ const deleteOpponent = (req, res) => {
 }
 
 const getOpponentById = (req, res) => {
-    db.query(`SELECT * FROM opponents WHERE id=${req.params.id}`, (err, result) => {
+    db.query(`SELECT * FROM opponents WHERE opponent_id=${req.params.id}`, (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);

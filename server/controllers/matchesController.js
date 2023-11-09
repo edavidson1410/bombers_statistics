@@ -28,14 +28,14 @@ const createNewMatch = (req, res) => {
 }
 
 const updateMatch = (req, res) => {
-    let id = req.params.id;
+    let id = req.params.match_id;
     const date = req.body.date;
     const home_away = req.body.home_away;
     const bomber_score = req.body.bomber_score;
     const opponent_score = req.body.opponent_score;
 
     db.query(`UPDATE matches
-    SET name = IFNULL(?, name) WHERE id = ?`, [
+    SET date = IFNULL(?, date), home_away = IFNULL(?, home_away), bomber_score = IFNULL(?, bomber_score), opponent_score = IFNULL(?, opponent_score) WHERE match_id = ?`, [
         date,
         home_away,
         bomber_score,
@@ -53,9 +53,9 @@ const updateMatch = (req, res) => {
 }
 
 const deleteMatch = (req, res) => {
-    const id = req.params.id;
+    const id = req.params.match_id;
 
-    db.query(`DELETE FROM matches WHERE id=?`, [id], (err, result) => {
+    db.query(`DELETE FROM matches WHERE match_id=?`, [id], (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);
@@ -67,7 +67,7 @@ const deleteMatch = (req, res) => {
 }
 
 const getMatchById = (req, res) => {
-    db.query(`SELECT * FROM matches WHERE id=${req.params.id}`, (err, result) => {
+    db.query(`SELECT * FROM matches WHERE match_id=${req.params.id}`, (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);
