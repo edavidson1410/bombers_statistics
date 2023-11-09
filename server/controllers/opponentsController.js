@@ -1,7 +1,7 @@
 const db = require('../configs/dbConfig');
 
-const getAllPlayers = (req, res) => {
-    db.query('SELECT * FROM players', (err, result) => {
+const getAllOpponents = (req, res) => {
+    db.query('SELECT * FROM opponents', (err, result) => {
         if (err) {
             console.log(err);
         } else {
@@ -10,10 +10,9 @@ const getAllPlayers = (req, res) => {
     })
 }
 
-const createNewPlayer = (req, res) => {
-    const first_name = req.body.first_name;
-    const last_name = req.body.last_name;
-    db.query(`INSERT INTO players VALUES (?, ?, ?)`, [0, first_name, last_name], (err, result) => {
+const createNewOpponent = (req, res) => {
+    const name = req.body.name;
+    db.query(`INSERT INTO opponents VALUES (?, ?)`, [0, name], (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);
@@ -25,15 +24,13 @@ const createNewPlayer = (req, res) => {
 
 }
 
-const updatePlayer = (req, res) => {
+const updateOpponent = (req, res) => {
     let id = req.params.id;
-    const first_name = req.params.first_name;
-    const last_name = req.body.last_name;
+    const name = req.body.name;
 
-    db.query(`UPDATE players
-    SET first_name = IFNULL(?, first_name), last_name = IFNULL(?, last_name) WHERE id = ?`, [
-        first_name,
-        last_name,
+    db.query(`UPDATE opponents
+    SET name = IFNULL(?, name) WHERE id = ?`, [
+        name,
         id
     ], (err, result) => {
         if (err) {
@@ -46,10 +43,9 @@ const updatePlayer = (req, res) => {
     })
 }
 
-const deletePlayer = (req, res) => {
+const deleteOpponent = (req, res) => {
     const id = req.params.id;
-
-    db.query(`DELETE FROM players WHERE id=?`, [id], (err, result) => {
+    db.query(`DELETE FROM opponents WHERE id=?`, [id], (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);
@@ -60,8 +56,8 @@ const deletePlayer = (req, res) => {
     })
 }
 
-const getPlayerById = (req, res) => {
-    db.query(`SELECT * FROM players WHERE id=${req.params.id}`, (err, result) => {
+const getOpponentById = (req, res) => {
+    db.query(`SELECT * FROM opponents WHERE id=${req.params.id}`, (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);
@@ -73,9 +69,9 @@ const getPlayerById = (req, res) => {
 }
 
 module.exports = {
-    getAllPlayers,
-    createNewPlayer,
-    updatePlayer,
-    deletePlayer,
-    getPlayerById
+    getAllOpponents,
+    createNewOpponent,
+    updateOpponent,
+    deleteOpponent,
+    getOpponentById
 }

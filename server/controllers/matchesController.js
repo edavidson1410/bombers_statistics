@@ -1,7 +1,7 @@
 const db = require('../configs/dbConfig');
 
 const getAllMatches = (req, res) => {
-    db.query('SELECT * FROM players', (err, result) => {
+    db.query('SELECT * FROM matches', (err, result) => {
         if (err) {
             console.log(err);
         } else {
@@ -11,9 +11,11 @@ const getAllMatches = (req, res) => {
 }
 
 const createNewMatch = (req, res) => {
-    const first_name = req.body.first_name;
-    const last_name = req.body.last_name;
-    db.query(`INSERT INTO playersinput VALUES (?, ?, ?)`, [0, first_name, last_name], (err, result) => {
+    const date = req.body.date;
+    const home_away = req.body.home_away;
+    const bomber_score = req.body.bomber_score;
+    const opponent_score = req.body.opponent_score;
+    db.query(`INSERT INTO matches VALUES (?, ?, ?, ?, ?)`, [0, date, home_away, bomber_score, opponent_score], (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);
@@ -27,17 +29,17 @@ const createNewMatch = (req, res) => {
 
 const updateMatch = (req, res) => {
     let id = req.params.id;
-    const name = req.body.name;
-    const position = req.body.position;
-    const caps = req.body.caps;
-    const tries = req.body.tries;
+    const date = req.body.date;
+    const home_away = req.body.home_away;
+    const bomber_score = req.body.bomber_score;
+    const opponent_score = req.body.opponent_score;
 
-    db.query(`UPDATE players
+    db.query(`UPDATE matches
     SET name = IFNULL(?, name) WHERE id = ?`, [
-        name,
-        position,
-        caps,
-        tries,
+        date,
+        home_away,
+        bomber_score,
+        opponent_score,
         id
     ], (err, result) => {
         if (err) {
@@ -53,7 +55,7 @@ const updateMatch = (req, res) => {
 const deleteMatch = (req, res) => {
     const id = req.params.id;
 
-    db.query(`DELETE FROM players WHERE id=?`, [id], (err, result) => {
+    db.query(`DELETE FROM matches WHERE id=?`, [id], (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);
@@ -65,7 +67,7 @@ const deleteMatch = (req, res) => {
 }
 
 const getMatchById = (req, res) => {
-    db.query(`SELECT * FROM players WHERE id=${req.params.id}`, (err, result) => {
+    db.query(`SELECT * FROM matches WHERE id=${req.params.id}`, (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);

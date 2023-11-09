@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 const matchesController = require('../controllers/matchesController');
 
-// Getting all players/Creating player
+// Getting all matches/Creating matches
 router.route('/')
 .get(matchesController.getAllMatches)
 .post(matchesController.createNewMatch)
 
-// Getting one player
+// Getting one match
 router.route('/:id')
 .get(matchesController.getMatchById)
 .patch(matchesController.updateMatch)

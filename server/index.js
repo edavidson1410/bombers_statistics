@@ -25,6 +25,9 @@ app.use("/players", playersRouter);
 const matchesRouter = require("./routes/matches");
 app.use("/matches", matchesRouter);
 
+const opponentsRouter = require("./routes/opponents");
+app.use("/opponents", opponentsRouter);
+
 //server startup
 app.get('/', function (req, res) {
     db.query('SELECT * FROM playersInput', (err, result) => {
