@@ -13,13 +13,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors(corsOptions));
 
 //routes
-const playerRouter = require("./routes/players");
-app.use("/players", playerRouter);
-//TODO: add games route
+const playerInputRouter = require("./routes/playersInput");
+app.use("/playersInput", playerInputRouter);
+
+const matchSubmissionRouter = require("./routes/matchSubmission");
+app.use("/matchSubmission", matchSubmissionRouter);
 
 //server startup
 app.get('/', function (req, res) {
-    db.query('SELECT * FROM players', (err, result) => {
+    db.query('SELECT * FROM playersInput', (err, result) => {
         if (err) {
             console.log(err);
         } else {

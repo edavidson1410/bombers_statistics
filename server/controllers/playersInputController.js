@@ -1,7 +1,7 @@
 const db = require('../configs/dbConfig');
 
 const getAllPlayers = (req, res) => {
-    db.query('SELECT * FROM players', (err, result) => {
+    db.query('SELECT * FROM playersinput', (err, result) => {
         if (err) {
             console.log(err);
         } else {
@@ -15,7 +15,7 @@ const createNewPlayer = (req, res) => {
     const position = req.body.position;
     const caps = req.body.caps;
     const tries = req.body.tries;
-    db.query(`INSERT INTO players VALUES (?, ?, ?, ?, ?)`, [0, name, position, caps, tries], (err, result) => {
+    db.query(`INSERT INTO playersinput VALUES (?, ?, ?, ?, ?)`, [0, name, position, caps, tries], (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);
@@ -35,7 +35,7 @@ const updatePlayer = (req, res) => {
     const tries = req.body.tries;
 
     db.query(`UPDATE players
-    SET name = IFNULL(?, name), position = IFNULL(?, position), caps=IFNULL(?, caps), tries=IFNULL(?, tries) WHERE id = ?`, [
+    SET name = IFNULL(?, name), positioninput = IFNULL(?, position), caps=IFNULL(?, caps), tries=IFNULL(?, tries) WHERE id = ?`, [
         name,
         position,
         caps,
@@ -55,7 +55,7 @@ const updatePlayer = (req, res) => {
 const deletePlayer = (req, res) => {
     const id = req.params.id;
 
-    db.query(`DELETE FROM players WHERE id=?`, [id], (err, result) => {
+    db.query(`DELETE FROM playersinput WHERE id=?`, [id], (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);
@@ -67,7 +67,7 @@ const deletePlayer = (req, res) => {
 }
 
 const getPlayerById = (req, res) => {
-    db.query(`SELECT * FROM players WHERE id=${req.params.id}`, (err, result) => {
+    db.query(`SELECT * FROM playersinput WHERE id=${req.params.id}`, (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);

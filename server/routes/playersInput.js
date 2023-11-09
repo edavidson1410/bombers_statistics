@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const playersController = require('../controllers/playersController');
+const playersController = require('../controllers/playersInputController');
 
 // Getting all players/Creating player
 router.route('/')
