@@ -11,11 +11,12 @@ const getAllGameStats = (req, res) => {
 }
 
 const createNewGameStat = (req, res) => {
-    const date = req.body.date;
-    const home_away = req.body.home_away;
-    const bomber_score = req.body.bomber_score;
-    const opponent_score = req.body.opponent_score;
-    db.query(`INSERT INTO matches VALUES (?, ?, ?, ?, ?)`, [0, date, home_away, bomber_score, opponent_score], (err, result) => {
+    const player = req.body.player_id;
+    const match = req.body.match_id;
+    const position = req.body.position_id;
+    const tries = req.body.tries;
+    const conversions = req.body.conversions;
+    db.query(`INSERT INTO gamestats VALUES (?, ?, ?, ?, ?, ?)`, [0, player, match, position, tries, conversions], (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);
@@ -81,7 +82,7 @@ const getGameStatById = (req, res) => {
 module.exports = {
     getAllGameStats,
     createNewGameStat,
-    updateGameStat,
+    // updateGameStat,
     deleteGameStat,
     getGameStatById
 }

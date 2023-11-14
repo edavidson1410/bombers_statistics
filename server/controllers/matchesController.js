@@ -33,9 +33,9 @@ const updateMatch = (req, res) => {
     const home_away = req.body.home_away;
     const bomber_score = req.body.bomber_score;
     const opponent_score = req.body.opponent_score;
-
+    const opponent_id = req.body.opponent_id;
     db.query(`UPDATE matches
-    SET date = IFNULL(?, date), home_away = IFNULL(?, home_away), bomber_score = IFNULL(?, bomber_score), opponent_score = IFNULL(?, opponent_score) WHERE match_id = ?`, [
+    SET date = IFNULL(?, date), home_away = IFNULL(?, home_away), bomber_score = IFNULL(?, bomber_score), opponent_score = IFNULL(?, opponent_score), opponent_id = IFNULL (?, opponent_id) WHERE match_id = ?`, [
         date,
         home_away,
         bomber_score,

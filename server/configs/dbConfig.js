@@ -11,7 +11,8 @@ const db = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: env.parsed.dbPassword,
-    database: "bombers_statistics"
+    database: "bombers_statistics",
+    multipleStatements: true
 })
 
 db.connect((err) => {

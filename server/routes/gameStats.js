@@ -4,13 +4,13 @@ const gameStatsController = require('../controllers/gameStatsController');
 
 // Getting all matches/Creating matches
 router.route('/')
-.get(gameStatsControllerController.getAllGameStats)
+.get(gameStatsController.getAllGameStats)
 .post(gameStatsController.createNewGameStat)
 
 // Getting one match
 router.route('/:id')
 .get(gameStatsController.getGameStatById)
-.patch(gameStatsController.updateGameStat)
+// .patch(gameStatsController.updateGameStat)
 .delete(gameStatsController.deleteGameStat)
 
 module.exports = router;
