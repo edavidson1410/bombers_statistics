@@ -10,7 +10,5 @@ router.route('/')
 // Getting one match
 router.route('/:id')
 .get(gameStatsController.getGameStatById)
-// .patch(gameStatsController.updateGameStat)
-.delete(gameStatsController.deleteGameStat)
 
 module.exports = router;

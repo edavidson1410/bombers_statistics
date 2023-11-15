@@ -13,6 +13,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors(corsOptions));
 
 //routes
+const matchSubmissionRouter = require("./routes/matchSubmission");
+app.use("/matchSubmission", matchSubmissionRouter);
+
 const playerInputRouter = require("./routes/playersInput");
 app.use("/playersInput", playerInputRouter);
 

@@ -10,7 +10,5 @@ router.route('/')
 // Getting one match
 router.route('/:id')
 .get(opponentsController.getOpponentById)
-.patch(opponentsController.updateOpponent)
-.delete(opponentsController.deleteOpponent)
 
 module.exports = router;

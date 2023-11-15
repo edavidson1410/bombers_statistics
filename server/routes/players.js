@@ -10,7 +10,5 @@ router.route('/')
 // Getting one player
 router.route('/:id')
 .get(playersController.getPlayerById)
-.patch(playersController.updatePlayer)
-.delete(playersController.deletePlayer)
 
 module.exports = router;

@@ -13,49 +13,10 @@ const getAllMatches = (req, res) => {
 const createNewMatch = (req, res) => {
     const date = req.body.date;
     const home_away = req.body.home_away;
-    const bomber_score = req.body.bomber_score;
-    const opponent_score = req.body.opponent_score;
-    db.query(`INSERT INTO matches VALUES (?, ?, ?, ?, ?)`, [0, date, home_away, bomber_score, opponent_score], (err, result) => {
-        if (err) {
-            console.log(err);
-            res.status(500);
-        } else {
-            res.status(200);
-            res.send(result);
-        }
-    })
-
-}
-
-const updateMatch = (req, res) => {
-    let id = req.params.match_id;
-    const date = req.body.date;
-    const home_away = req.body.home_away;
-    const bomber_score = req.body.bomber_score;
+    const bombers_score = req.body.bombers_score;
     const opponent_score = req.body.opponent_score;
     const opponent_id = req.body.opponent_id;
-    db.query(`UPDATE matches
-    SET date = IFNULL(?, date), home_away = IFNULL(?, home_away), bomber_score = IFNULL(?, bomber_score), opponent_score = IFNULL(?, opponent_score), opponent_id = IFNULL (?, opponent_id) WHERE match_id = ?`, [
-        date,
-        home_away,
-        bomber_score,
-        opponent_score,
-        id
-    ], (err, result) => {
-        if (err) {
-            console.log(err);
-            res.status(500);
-        } else {
-            res.status(200);
-            res.send(result);
-        }
-    })
-}
-
-const deleteMatch = (req, res) => {
-    const id = req.params.match_id;
-
-    db.query(`DELETE FROM matches WHERE match_id=?`, [id], (err, result) => {
+    db.query(`INSERT INTO matches VALUES (?, ?, ?, ?, ?, ?)`, [0, date, home_away, bombers_score, opponent_score, opponent_id], (err, result) => {
         if (err) {
             console.log(err);
             res.status(500);
@@ -81,7 +42,5 @@ const getMatchById = (req, res) => {
 module.exports = {
     getAllMatches,
     createNewMatch,
-    updateMatch,
-    deleteMatch,
     getMatchById
 }

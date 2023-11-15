@@ -10,7 +10,5 @@ router.route('/')
 // Getting one match
 router.route('/:id')
 .get(matchesController.getMatchById)
-.patch(matchesController.updateMatch)
-.delete(matchesController.deleteMatch)
 
 module.exports = router;
