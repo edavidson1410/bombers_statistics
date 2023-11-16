@@ -10,7 +10,8 @@ img {
 }
 
 /* link styles */
-.linksContainer {
+#linksContainer {
+    justify-self: center;
     display: flex;
     gap: 1rem;
 }

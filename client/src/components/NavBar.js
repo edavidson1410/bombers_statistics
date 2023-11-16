@@ -14,7 +14,7 @@ const NavBar = () => {
                 St. Louis Bombers
                 </Typography>
             </div>
-            <div className="linksContainer">
+            <div id="linksContainer">
                 <Link to="/">Home</Link>
                 |
                 <Link to="/playerTable">All-Time Statistics</Link>

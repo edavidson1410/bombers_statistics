@@ -6,10 +6,14 @@ form {
     justify-content: flex-start;
 }
 
-.matchup {
+.matchup, .date, .score {
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+.score {
+    margin-bottom: 0.5rem;
 }
 
 .roster {
@@ -19,13 +23,10 @@ form {
 .starters, .subs {
     display: flex;
     flex-direction: column;
+    gap: 10px;
 }
 
 li {
     list-style: none;
-}
-
-.MuiFormControl-root {
-    margin: 0.5rem;
 }
 
