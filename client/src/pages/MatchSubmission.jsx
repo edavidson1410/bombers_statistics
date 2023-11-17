@@ -2,67 +2,73 @@ import { useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
 import '../assets/MatchSubmission.css'
 import NavBar from '../components/NavBar';
-import { handleInputChange, starterRows, subRows } from '../utils/MatchSubmissionUtil';
+import { starters, subs } from '../assets/positions';
 
 const MatchSubmission = () => {
 
+    //states for match and player split
     const [match, setMatch] = useState({
-        match_id: 0,
-        date: 0,
-        home_away: 0,
+        opponent_id: 0,
         bombers_score: 0,
         opponent_score: 0,
-        opponent_id: 0
-    })
-
-    const [gamestats, setGamestats] = useState([
-        { gamestat_id: 0,
-        player_id: 0,
-        match_id: 0,
-        position_id: 0,
-        tries: 0,
-        converstions: 0 }
-    ])
-
-    const [playerData, setPlayerData] = useState({
-
-    })
+        year: '',
+        season: '',
+        date: '',
+    });
       
-    // used for match data input change
-    const handleInputChange = (e, setState, stat) => {
-        const newStat = {...stat};
-        newStat[e.target.id] = e.target.value;
-        setState(newStat);
-    }
+    const [playerData, setPlayerData] = useState(starters);
 
-    // Handle changes in player statistics
-    const handlePlayerChange = (index, e) => {
-    const { name, value } = e.target;
-    setPlayerData((prevStats) => ({
-        ...prevStats,
-        players: [
-        ...prevStats.players.slice(0, index),
-        {
-            ...prevStats.players[index],
-            [name]: value,
-        },
-        ...prevStats.players.slice(index + 1),
-        ],
-    }));
+    // handlers for input changes of Match and Player
+    const handleMatchChange = (e) => {
+        const { id, value } = e.target;
+        setMatch((prevMatch) => ({
+            ...prevMatch,
+            [id]: value,
+        }));
+        console.log(match)
     };
+    
+    const handlePlayerChange = (e, index, field) => {
+        const value = e.target.value;
+        setPlayerData(prevData => {
+          const updatePlayer = [...prevData];
+          console.log(updatePlayer[index])
+          updatePlayer[index] = {
+            ...updatePlayer[index],
+            [field]: value
+          };
+          console.log(updatePlayer)
+          return updatePlayer;
+        });
+      };
 
+    // Post Submit for both match and players
     const handleSubmitPost = async (e) => {
-        const response = await fetch('http://localhost:3001/matches', 
-        {
+        e.preventDefault();
+        const requestBody = {
+            match,
+            playerData,
+        };
+        console.log(requestBody)
+        
+        try {
+            const response = await fetch('http://localhost:3001/matchSubmission', {
             method: 'POST',
             headers: {
-                "content-type": "application/json"
-              },
-            body: JSON.stringify(match)
-        })
-        console.log(response.body)
-        return response;
-    }
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+            });
+        
+            if (response.ok) {
+            console.log('Data submitted successfully!');
+            } else {
+            console.error('Failed to submit data.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
     
 
     return(
@@ -81,33 +87,93 @@ const MatchSubmission = () => {
                         label="Opponent" 
                         id="opponent_id" 
                         size="small"
-                        onChange={(e) => handleInputChange(e, setMatch, match)} />
+                        onChange={(e) => handleMatchChange(e)} />
                 </div>
-
                 <div className="score">
                     <TextField label="Bombers Score" id="bombers_score" size="small" 
-                    onChange={(e) => handleInputChange(e, setMatch, match)}/>
+                    onChange={(e) => handleMatchChange(e)}/>
                     <TextField label="Opponent Score" id="opponent_score" size="small" 
-                    onChange={(e) => handleInputChange(e, setMatch, match)}/>
+                    onChange={(e) => handleMatchChange(e)}/>
                 </div>
-
                 <div className="date">
                     <TextField label="Year" id="year" size="small"/>
                     <TextField label="Season" id="season" size="small"/>
                     <TextField label="Date" id="date" size="small"
-                    onChange={(e) => handleInputChange(e, setMatch, match)}/>
+                    onChange={(e) => handleMatchChange(e)}/>
                 </div>
 
                 <div className="roster">
                     <ul className="starters">                
-                        {starterRows}
+                        {starters.map((starter, index) => {
+                        return(
+                            <li>
+                            <label htmlFor={String(starter.id)}>{starter.id}</label>
+                                <TextField key={`position${starter.id}`} 
+                                    label={starter.position} 
+                                    id={String(starter.id)}
+                                    variant="outlined" 
+                                    size="small"
+                                    style = {{width: "10rem"}}
+                                    onChange={(e) =>
+                                        handlePlayerChange(e, index, "name")
+                                      } />
+                                <TextField key={`tries${starter.id}`} 
+                                    label="Tries" 
+                                    variant="outlined" 
+                                    size="small"
+                                    style = {{width: "10rem"}} 
+                                    onChange={(e) =>
+                                        handlePlayerChange(e, index, "tries")
+                                      }/>
+                                <TextField key={`conversions${starter.id}`} 
+                                    label="Conversions"
+                                    variant="outlined" 
+                                    size="small"
+                                    style = {{width: "10rem"}} 
+                                    onChange={(e) =>
+                                        handlePlayerChange(e, index, "conversions")
+                                      }/>
+                            </li>
+                            )
+                        })}
                     </ul>
                     <ul className="subs">
-                        {subRows}
+                        {subs.map((sub, index) => {
+                            return(
+                                <li >
+                                <label htmlFor={String(sub.id)}>{sub.id}</label>
+                                    <TextField key={`position${sub.id}`} 
+                                        label={sub.position} 
+                                        id={String(sub.id)}
+                                        variant="outlined" 
+                                        size="small"
+                                        style = {{width: "10rem"}}
+                                        onChange={(e) =>
+                                            handlePlayerChange(e, index, "name")
+                                        } />
+                                    <TextField key={`tries${sub.id}`} 
+                                        label="Tries" 
+                                        variant="outlined" 
+                                        size="small"
+                                        style = {{width: "10rem"}} 
+                                        onChange={(e) =>
+                                            handlePlayerChange(e, index, "tries")
+                                        }/>
+                                    <TextField key={`conversions${sub.id}`} 
+                                        label="Conversions"
+                                        variant="outlined" 
+                                        size="small"
+                                        style = {{width: "10rem"}} 
+                                        onChange={(e) =>
+                                            handlePlayerChange(e, index, "conversions")
+                                        }/>
+                                </li>
+                                )
+                            })}
                     </ul>
                 </div>
 
-                <Button color="accent" variant="contained" >Submit</Button>
+                <Button type="submit" color="accent" variant="contained" >Submit</Button>
             </form>
         </Box>
     </>
