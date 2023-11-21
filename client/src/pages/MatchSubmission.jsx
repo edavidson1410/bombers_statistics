@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TextField, Button, Box } from '@mui/material';
+import { TextField, Button, Box, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import '../assets/MatchSubmission.css'
 import NavBar from '../components/NavBar';
 import { starters, subs } from '../assets/positions';
@@ -11,9 +11,8 @@ const MatchSubmission = () => {
         opponent_id: 0,
         bombers_score: 0,
         opponent_score: 0,
-        year: '',
-        season: '',
         date: '',
+        home_away: 0
     });
       
     const [playerData, setPlayerData] = useState(starters);
@@ -96,10 +95,18 @@ const MatchSubmission = () => {
                     onChange={(e) => handleMatchChange(e)}/>
                 </div>
                 <div className="date">
-                    <TextField label="Year" id="year" size="small"/>
-                    <TextField label="Season" id="season" size="small"/>
+                    {/* <TextField label="Year" id="year" size="small"/>
+                    <TextField label="Season" id="season" size="small"/> */}
                     <TextField label="Date" id="date" size="small"
                     onChange={(e) => handleMatchChange(e)}/>
+                </div>
+                <div className="home_away">
+                    <RadioGroup        
+                        row
+                        onChange={(e) => handleMatchChange(e)}>
+                        <FormControlLabel value="0" control={<Radio />} label="Home"/>
+                        <FormControlLabel value="1" control={<Radio />} label="Away"/>
+                    </RadioGroup>
                 </div>
 
                 <div className="roster">
@@ -115,7 +122,7 @@ const MatchSubmission = () => {
                                     size="small"
                                     style = {{width: "10rem"}}
                                     onChange={(e) =>
-                                        handlePlayerChange(e, index, "name")
+                                        handlePlayerChange(e, index, "player_id")
                                       } />
                                 <TextField key={`tries${starter.id}`} 
                                     label="Tries" 
