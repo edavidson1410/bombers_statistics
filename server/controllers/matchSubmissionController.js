@@ -15,18 +15,24 @@ const createNewMatchSubmission = (req, res) => {
     const createMatchVariables = [0, date, home_away, bombers_score, opponent_score, opponent_id];
 
     db.query(createMatchQuery, createMatchVariables, (err, result) => {
+        req.body.playerData.map((player) => {
+            const player_id = player.player_id;
+            const match_id = result.insertId;
+            const position_id = player.position_id;
+            const tries = player.tries;
+            const conversions = player.conversions;
+            const createGameStatQuery = "INSERT INTO gamestats VALUES (?, ?, ?, ?, ?, ?)";
+            const createGameStatVariables = [0, player_id, match_id, position_id, tries, conversions]
+            db.query(createGameStatQuery, createGameStatVariables)
+        })  
         if (err) {
-            console.log(err);
-            res.status(500);
-        } else {
-            res.status(200);
-            res.send(result);
-            match_id = result.insertId
-        }
+                console.log(err);
+                res.status(500);
+            } else {
+                res.status(200);
+                res.send(result);
+            }
     })
-    //need to grab match ID after creation for gamestat
-    // gameStatsController.createNewGameStat(req, res);
-
 }
 
 const getMatchSubmissionById = (req, res) => {
