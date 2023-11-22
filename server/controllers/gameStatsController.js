@@ -10,22 +10,23 @@ const getAllGameStats = (req, res) => {
     })
 }
 
-const createNewGameStat = (req, res) => {
-    const player = req.body.player_id;
-    const match = req.body.match_id;
-    const position = req.body.position_id;
-    const tries = req.body.tries;
-    const conversions = req.body.conversions;
-    db.query(`INSERT INTO gamestats VALUES (?, ?, ?, ?, ?, ?)`, [0, player, match, position, tries, conversions], (err, result) => {
-        if (err) {
+const createNewGameStat = (req, res, err, result) => {
+    //cycles through each player and adds their gamestat individually
+    req.body.playerData.map((player) => {
+        const player_id = player.player_id;
+        const match_id = 1;
+        const position_id = player.position_id;
+        const tries = player.tries;
+        const conversions = player.conversions;
+        db.query(`INSERT INTO gamestats VALUES (?, ?, ?, ?, ?, ?)`, [0, player_id, match_id, position_id, tries, conversions])
+    })  
+    if (err) {
             console.log(err);
             res.status(500);
         } else {
             res.status(200);
             res.send(result);
         }
-    })
-
 }
 
 const getGameStatById = (req, res) => {

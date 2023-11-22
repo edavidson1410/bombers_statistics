@@ -5,7 +5,6 @@ const matchesController = require('../controllers/matchesController');
 // Getting all matches/Creating matches
 router.route('/')
 .get(matchesController.getAllMatches)
-.post(matchesController.createNewMatch)
 
 // Getting one match
 router.route('/:id')
