@@ -24,7 +24,6 @@ const MatchSubmission = () => {
             ...prevMatch,
             [id]: value,
         }));
-        console.log(match)
     };
     
     const handlePlayerChange = (e, index, field) => {
@@ -36,9 +35,9 @@ const MatchSubmission = () => {
             ...updatePlayer[index],
             [field]: value
           };
-          console.log(updatePlayer)
           return updatePlayer;
         });
+
       };
 
     // Post Submit for both match and players
@@ -104,8 +103,8 @@ const MatchSubmission = () => {
                     <RadioGroup        
                         row
                         onChange={(e) => handleMatchChange(e)}>
-                        <FormControlLabel value="0" control={<Radio />} label="Home"/>
-                        <FormControlLabel value="1" control={<Radio />} label="Away"/>
+                        <FormControlLabel value="0" control={<Radio id="home_away" />} label="Home"/>
+                        <FormControlLabel value="1" control={<Radio id="home_away" />} label="Away"/>
                     </RadioGroup>
                 </div>
 
