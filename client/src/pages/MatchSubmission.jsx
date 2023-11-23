@@ -1,10 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TextField, Button, Box, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import '../assets/MatchSubmission.css'
 import NavBar from '../components/NavBar';
+import useFetch from '../hooks/useFetch';
 import { starters, subs } from '../assets/positions';
 
 const MatchSubmission = () => {
+
+    //fetch opponent and playerName data for dropdowns/autocomplete
+    
+    const opponentDB = useFetch("http://localhost:3001/opponents");
+    const playerDB = useFetch("http://localhost:3001/players");
+    const opponentList = opponentDB.data;
+    const playerList = playerDB.data;
+    const oppponentLoading = opponentDB.loading;
+    const playerLoading = playerDB.loading;
 
     //states for match and player split
     const [match, setMatch] = useState({
@@ -30,7 +40,6 @@ const MatchSubmission = () => {
         const value = e.target.value;
         setPlayerData(prevData => {
           const updatePlayer = [...prevData];
-          console.log(updatePlayer[index])
           updatePlayer[index] = {
             ...updatePlayer[index],
             [field]: value
@@ -38,7 +47,13 @@ const MatchSubmission = () => {
           return updatePlayer;
         });
 
-      };
+    };
+
+    //fetch db data and auto completes search
+    const onSearch = (e, searchTerm) => {
+        searchTerm = e.target.value;
+        console.log("search", searchTerm)
+    }
 
     // Post Submit for both match and players
     const handleSubmitPost = async (e) => {
@@ -85,13 +100,27 @@ const MatchSubmission = () => {
                         label="Opponent" 
                         id="opponent_id" 
                         size="small"
-                        onChange={(e) => handleMatchChange(e)} />
+                        onChange={(e) => {
+                            onSearch(e)
+                            handleMatchChange(e)
+                        }} />
+                    <div className="dropdown">
+                        {opponentList.filter(opponent => {
+                            const searchTerm = match.opponent_id.toLowerCase();
+                            const opponentName = opponent.name.toLowerCase();
+                            return searchTerm && opponentName.startsWith(searchTerm)
+                        })
+                        .map((opponent) => {
+                            console.log(opponent)
+                        })
+                    }
+                    </div>
                 </div>
                 <div className="score">
                     <TextField label="Bombers Score" id="bombers_score" size="small" 
                     onChange={(e) => handleMatchChange(e)}/>
-                    <TextField label="Opponent Score" id="opponent_score" size="small" 
-                    onChange={(e) => handleMatchChange(e)}/>
+                        <TextField label="Opponent Score" id="opponent_score" size="small" 
+                        onChange={(e) => handleMatchChange(e)}/>
                 </div>
                 <div className="date">
                     {/* <TextField label="Year" id="year" size="small"/>
@@ -113,25 +142,25 @@ const MatchSubmission = () => {
                         {starters.map((starter, index) => {
                         return(
                             <li>
-                            <label htmlFor={String(starter.id)}>{starter.id}</label>
-                                <TextField key={`position${starter.id}`} 
+                            <label htmlFor={String(starter.position_id)}>{starter.position_id}</label>
+                                <TextField key={`position${starter.position_id}`} 
                                     label={starter.position} 
-                                    id={String(starter.id)}
+                                    id={String(starter.position_id)}
                                     variant="outlined" 
                                     size="small"
                                     style = {{width: "10rem"}}
                                     onChange={(e) =>
                                         handlePlayerChange(e, index, "player_id")
                                       } />
-                                <TextField key={`tries${starter.id}`} 
+                                <TextField key={`tries${starter.position_id}`} 
                                     label="Tries" 
                                     variant="outlined" 
                                     size="small"
-                                    style = {{width: "10rem"}} 
+                                    style = {{width: "10rem"}}
                                     onChange={(e) =>
                                         handlePlayerChange(e, index, "tries")
                                       }/>
-                                <TextField key={`conversions${starter.id}`} 
+                                <TextField key={`conversions${starter.position_id}`} 
                                     label="Conversions"
                                     variant="outlined" 
                                     size="small"
@@ -147,17 +176,17 @@ const MatchSubmission = () => {
                         {subs.map((sub, index) => {
                             return(
                                 <li >
-                                <label htmlFor={String(sub.id)}>{sub.id}</label>
-                                    <TextField key={`position${sub.id}`} 
+                                <label htmlFor={String(sub.position_id)}>{sub.position_id}</label>
+                                    <TextField key={`position${sub.position_id}`} 
                                         label={sub.position} 
-                                        id={String(sub.id)}
+                                        id={String(sub.position_id)}
                                         variant="outlined" 
                                         size="small"
                                         style = {{width: "10rem"}}
                                         onChange={(e) =>
                                             handlePlayerChange(e, index, "name")
                                         } />
-                                    <TextField key={`tries${sub.id}`} 
+                                    <TextField key={`tries${sub.position_id}`} 
                                         label="Tries" 
                                         variant="outlined" 
                                         size="small"
@@ -165,7 +194,7 @@ const MatchSubmission = () => {
                                         onChange={(e) =>
                                             handlePlayerChange(e, index, "tries")
                                         }/>
-                                    <TextField key={`conversions${sub.id}`} 
+                                    <TextField key={`conversions${sub.position_id}`} 
                                         label="Conversions"
                                         variant="outlined" 
                                         size="small"
